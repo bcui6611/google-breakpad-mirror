@@ -36,7 +36,7 @@
 
 #ifndef PROCESSOR_FAST_SOURCE_LINE_RESOLVER_TYPES_H__
 #define PROCESSOR_FAST_SOURCE_LINE_RESOLVER_TYPES_H__
-
+#include <config.h>
 #include "google_breakpad/processor/fast_source_line_resolver.h"
 #include "processor/source_line_resolver_base_types.h"
 

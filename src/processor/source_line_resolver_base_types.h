@@ -38,6 +38,7 @@
 //
 // Author: Siyang Xie (lambxsy@google.com)
 
+#include <config.h>
 #include <stdio.h>
 
 #include <map>

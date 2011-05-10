@@ -138,7 +138,8 @@ namespace source_line_protocol {
 
 // Response status codes
 const u_int8_t OK    = 1;
-const u_int8_t ERROR = 0;
+const u_int8_t ERR   = 0;
+
 
 // Commands
 const u_int8_t HAS          = 1;

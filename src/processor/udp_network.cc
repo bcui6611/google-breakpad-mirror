@@ -27,12 +27,15 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+
 
 #include "processor/udp_network.h"
 
+#ifdef _WIN32
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+#else
 #include <arpa/inet.h>
 #include <errno.h>
 #include <netdb.h>
@@ -40,6 +43,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
+#endif
 
 #include <string>
 
@@ -105,9 +109,9 @@ bool UDPNetwork::Init(bool listen) {
       addr = &((struct sockaddr_in*)&address_)->sin_addr;
     else if (((struct sockaddr*)&address_)->sa_family == AF_INET6)
       addr = &((struct sockaddr_in6*)&address_)->sin6_addr;
-    if (inet_ntop(((struct sockaddr*)&address_)->sa_family, addr,
-                  address_string, sizeof(address_string)) != NULL)
-      BPLOG(INFO) << "Listening on address " << address_string;
+   // if (inet_ntop(((struct sockaddr*)&address_)->sa_family, addr,
+   //               address_string, sizeof(address_string)) != NULL)
+   //   BPLOG(INFO) << "Listening on address " << address_string;
 
     if (bind(socket_,
              (struct sockaddr *)&address_,

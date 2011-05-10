@@ -27,19 +27,22 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifdef _WIN32
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+#else
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#endif
 
 #include <algorithm>
 #include <iostream>
 #include <sstream>
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
 #include "google_breakpad/processor/code_module.h"
 #include "google_breakpad/processor/stack_frame.h"
 #include "processor/basic_code_module.h"
@@ -133,7 +136,7 @@ bool NetworkSourceLineServer::HandleRequest(binarystream &request,
     break;
   default:
     BPLOG(ERROR) << "Unknown command " << int(command);
-    response << P::ERROR;
+    response << P::ERR;
     break;
   }
   return true;
@@ -145,7 +148,7 @@ void NetworkSourceLineServer::HandleHas(binarystream &message,
   message >> module_name >> debug_file >> debug_id;
   if (message.eof()) {
     BPLOG(ERROR) << "HAS message malformed";
-    response << P::ERROR;
+    response << P::ERR;
     return;
   }
   BPLOG(INFO) << "Received message HAS " << module_name
@@ -173,7 +176,7 @@ void NetworkSourceLineServer::HandleLoad(binarystream &message,
   message >> module_name >> debug_file >> debug_id;
   if (message.eof()) {
     BPLOG(ERROR) << "LOAD message malformed";
-    response << P::ERROR;
+    response << P::ERR;
     return;
   }
   BPLOG(INFO) << "Received message LOAD " << module_name
@@ -255,7 +258,7 @@ void NetworkSourceLineServer::HandleGet(binarystream &message,
           >> module_base >> instruction;
   if (message.eof()) {
     BPLOG(ERROR) << "GET message malformed";
-    response << P::ERROR;
+    response << P::ERR;
     return;
   }
 
@@ -292,7 +295,7 @@ void NetworkSourceLineServer::HandleGetStackWin(binarystream &message,
           >> module_base >> instruction;
   if (message.eof()) {
     BPLOG(ERROR) << "GETSTACKWIN message malformed";
-    response << P::ERROR;
+    response << P::ERR;
     return;
   }
 
@@ -352,7 +355,7 @@ void NetworkSourceLineServer::HandleGetStackCFI(binarystream &message,
           >> module_base >> instruction;
   if (message.eof()) {
     BPLOG(ERROR) << "GETSTACKCFI message malformed";
-    response << P::ERROR;
+    response << P::ERR;
     return;
   }
 

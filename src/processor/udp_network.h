@@ -32,7 +32,11 @@
 #ifndef _GOOGLE_BREAKPAD_PROCESSOR_UDP_NETWORK_H_
 #define _GOOGLE_BREAKPAD_PROCESSOR_UDP_NETWORK_H_
 
+#ifdef _WIN32
+#include <config.h>
+#else
 #include <sys/socket.h>
+#endif
 
 #include <string>
 

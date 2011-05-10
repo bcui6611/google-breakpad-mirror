@@ -24,6 +24,7 @@
 //
 // Author: Cris Neckar
 
+#include <config.h>
 #include "processor/disassembler_x86.h"
 
 #include <string.h>

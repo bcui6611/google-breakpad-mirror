@@ -40,7 +40,11 @@
 #ifndef GOOGLE_BREAKPAD_PROCESSOR_NETWORK_SOURCE_LINE_RESOLVER_H__
 #define GOOGLE_BREAKPAD_PROCESSOR_NETWORK_SOURCE_LINE_RESOLVER_H__
 
+#ifdef _WIN32
+#include <config.h>
+#else
 #include <sys/socket.h>
+#endif
 
 #include <map>
 #include <set>

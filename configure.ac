@@ -50,6 +50,10 @@ AC_HEADER_STDC
 m4_include(m4/ax_pthread.m4)
 AX_PTHREAD
 AC_CHECK_HEADERS([a.out.h])
+AC_CHECK_HEADERS([arpa/inet.h])
+AC_CHECK_HEADERS([netdb.h])
+
+AH_BOTTOM([#include "win32.h"])
 
 # Only build Linux client libs when compiling for Linux
 case $host in
@@ -57,6 +61,22 @@ case $host in
         LINUX_HOST=true
         ;;
 esac
+
+case "$(uname -s)" in
+  CYGWIN*)
+    IS_WINDOWS="true"
+    CFLAGS="${CFLAGS} -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes \
+-Wmissing-declarations -Wredundant-decls"
+    CXXFLAGS="${CXXFLAGS} -pedantic -Wshadow -fdiagnostics-show-option \
+-Wformat=2 -Wconversion -Wstrict-aliasing -Wextra \
+-Woverloaded-virtual -Wnon-virtual-dtor -Wctor-dtor-privacy \
+-Wno-long-long  -Wmissing-declarations -Wno-redundant-decls"
+    LIBS="-lmswsock -lws2_32 $LIBS"
+    ;;
+esac
+
+AM_CONDITIONAL(WINDOWS, test x$IS_WINDOWS = xtrue])
+
 AM_CONDITIONAL(LINUX_HOST, test x$LINUX_HOST = xtrue)
 
 AC_ARG_ENABLE(m32,

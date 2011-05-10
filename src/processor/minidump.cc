@@ -33,6 +33,7 @@
 //
 // Author: Mark Mentovai
 
+#include <config.h>
 #include "google_breakpad/processor/minidump.h"
 
 #include <assert.h>
